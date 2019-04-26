@@ -26,7 +26,7 @@ done
 #trap '"Some command filed with exit code $?."' EXIT
 
 # The minimum file size to allow splitting
-SIZE_THRESHOLD=1;
+SIZE_THRESHOLD=20;
 
 # EXIT CODES:
 SUCCESS=0;
