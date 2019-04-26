@@ -22,8 +22,8 @@ while [ "$1" != "" ]; do
   shift
 done
 
-#set -e
-#trap '"Some command filed with exit code $?."' EXIT
+set -e
+trap '"Some command filed with exit code $?."' EXIT
 
 # The minimum file size to allow splitting
 SIZE_THRESHOLD=20;
