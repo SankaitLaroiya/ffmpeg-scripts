@@ -1,5 +1,23 @@
 #!/bin/bash
 
+print_help() {
+  echo "====================== Script Options ======================";
+  echo "-f | --file      : the file to split";
+  echo "-o | --outpath   : the directory to put the split files in";
+  echo "-c | --chunksize : the max length of each split file";
+  echo "============================================================";
+
+  exit 0;
+}
+
+# The minimum file size to allow splitting
+SIZE_THRESHOLD=20;
+
+# EXIT CODES:
+SUCCESS=0;
+FAILURE=1;
+NO_SPLIT_NEEDED=2;
+
 # Command line arguments parsing
 while [ "$1" != "" ]; do
   case $1 in 
@@ -17,6 +35,10 @@ while [ "$1" != "" ]; do
       shift;
       chunksize=$1;
       ;;
+
+    -h | --help)
+      print_help;
+      ;;
   esac
 
   shift
@@ -24,14 +46,6 @@ done
 
 set -e
 trap '"Some command filed with exit code $?."' EXIT
-
-# The minimum file size to allow splitting
-SIZE_THRESHOLD=20;
-
-# EXIT CODES:
-SUCCESS=0;
-FAILURE=1;
-NO_SPLIT_NEEDED=2;
 
 # Check that ffmpeg/ffprobe is installed and is executable
 if ! [ -x "$(command -v ffmpeg)" ] || ! [ -x "$(command -v ffprobe)" ]; then
