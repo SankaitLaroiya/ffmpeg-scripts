@@ -61,10 +61,18 @@ do
   echo "file '$file'" >> temp.txt;
 done
 
+file_cleanup() {
+  for file in "${files[@]}"
+  do
+    rm -f "$file";
+  done
+}
+
 arr_len="${#files[@]}";
 
 if [ $arr_len -eq 1 ]; then
   mv "${files[0]}" $out_dir/$output_name;
+  file_cleanup;
   exit $SUCCESS;
 fi 
 
@@ -73,7 +81,7 @@ if ! [ $arr_len -gt 1 ]; then
   exit $FAILURE;
 fi
 
-if [ -z output_name ]; then
+if [ -z $output_name ]; then
   output_name="output";
 fi
 
@@ -89,12 +97,9 @@ ffmpeg_join() {
 ffmpeg_join;
 
 if ! [ -z $cleanup ] && [ $cleanup -eq 1 ]; then
-  for file in "${files[@]}"
-  do
-    rm -f "$file";
-  done
-
-  rm -f ./temp.txt;
+  file_cleanup;
 fi
+
+rm -f ./temp.txt;
 
 exit $SUCCESS;

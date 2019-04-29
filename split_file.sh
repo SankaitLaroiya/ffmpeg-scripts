@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # The minimum file size to allow splitting
-SIZE_THRESHOLD=1;
+SIZE_THRESHOLD=100;
 
 # EXIT CODES:
 SUCCESS=0;
